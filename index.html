@@ -19,6 +19,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            position: relative;
         }
         h1 {
             margin: 20px 0;
@@ -26,7 +27,26 @@
         }
         .logo {
             width: 150px;
-            margin-bottom: 20px;
+            margin: 20px 0; /* إضافة مسافة بين الشعار والزر */
+        }
+        .back-button {
+            position: absolute;
+            top: 20px; /* المسافة من أعلى الصفحة */
+            left: 20px; /* المسافة من اليسار */
+            background-color: #ffcc00;
+            color: #000;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 10; /* لضمان أن الزر يظهر فوق العناصر الأخرى */
+        }
+        .back-button:hover {
+            background-color: #ffbb00;
+            transform: scale(1.05);
         }
         .points-container {
             display: flex;
@@ -34,11 +54,11 @@
             margin: 10px 0;
         }
         .points {
-            font-size: 20px; /* تقليل حجم الخط */
+            font-size: 20px;
             margin: 10px;
-            padding: 8px 15px; /* تقليل الحشوة */
+            padding: 8px 15px;
             border: 2px solid #ffcc00;
-            border-radius: 12px; /* تقليل الزوايا */
+            border-radius: 12px;
             background-color: rgba(0, 0, 0, 0.5);
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
         }
@@ -112,6 +132,7 @@
 </head>
 <body>
 
+    <button class="back-button" id="homeButton">Back</button>
     <img src="https://i.suar.me/2Gzzw/l" alt="Logo" class="logo">
     <div class="timer" id="timerDisplay">Time: 30</div>
     
@@ -123,7 +144,6 @@
     <div class="game-area" id="gameArea"></div>
     <button class="button" id="startButton">Start Game</button>
     <button class="button" id="claimButton" disabled>Claim</button>
-    <button class="button" id="homeButton">Back to Home</button>
 
     <script>
         const timerDisplay = document.getElementById('timerDisplay');
