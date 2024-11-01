@@ -2,78 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Games Coming Soon</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+            color: white;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
-            color: white;
+            margin: 0;
             text-align: center;
         }
-
-        h1 {
-            font-size: 48px;
+        .logo {
+            width: 100px;
             margin-bottom: 20px;
         }
-
-        p {
-            font-size: 20px;
-            margin-bottom: 40px;
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            background-color: #222;
         }
-
-        .icon-container {
-            width: 150px;
-            height: 150px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #28a745;
-            border-radius: 50%;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .icon-container i {
+        .icon {
             font-size: 80px;
-            color: white;
+            color: #0088cc;
+            margin-bottom: 20px;
         }
-
-        .button {
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #cccccc;
+        }
+        .back-button {
+            display: inline-block;
             background-color: #0088cc;
             color: white;
-            padding: 15px 30px;
-            font-size: 20px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
             text-decoration: none;
-            transition: background-color 0.3s, transform 0.2s;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
         }
-
-        .button:hover {
+        .back-button:hover {
             background-color: #0077b3;
-            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
-
-    <div class="icon-container">
-        <i class="fas fa-gamepad"></i>
+    <img src="https://i.suar.me/N2p44/l" alt="App Logo" class="logo">
+    <div class="container">
+        <i class="icon fas fa-gamepad"></i>
+        <h1>Games Coming Soon!</h1>
+        <p>Stay tuned for exciting games launching soon.</p>
+        <a href="https://adscoiins.github.io/Home1/" class="back-button"><i class="fas fa-arrow-left"></i> Back to Home</a>
     </div>
-
-    <h1>Games Coming Soon!</h1>
-    <p>Exciting new games are on their way. Stay tuned for updates!</p>
-    <a href="https://adscoiins.github.io/Home1/" class="button">Return to Home</a>
-
 </body>
 </html>
