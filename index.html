@@ -2,72 +2,225 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Games Coming Soon</title>
+    <title>Point Collection Game</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
-            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background: linear-gradient(135deg, #4b79a1, #283e51);
+            color: #ffffff;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-        .logo {
-            width: 100px;
-            margin-bottom: 20px;
-        }
-        .container {
-            max-width: 600px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            border-radius: 15px;
-            background-color: #222;
-        }
-        .icon {
-            font-size: 80px;
-            color: #0088cc;
-            margin-bottom: 20px;
         }
         h1 {
-            font-size: 36px;
-            margin-bottom: 10px;
-            color: #ffffff;
+            margin: 20px 0;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
         }
-        p {
-            font-size: 18px;
-            margin-bottom: 30px;
-            color: #cccccc;
+        .logo {
+            width: 150px;
+            margin-bottom: 20px;
         }
-        .back-button {
-            display: inline-block;
-            background-color: #0088cc;
-            color: white;
+        .points-container {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        .points {
+            font-size: 20px; /* تقليل حجم الخط */
+            margin: 10px;
+            padding: 8px 15px; /* تقليل الحشوة */
+            border: 2px solid #ffcc00;
+            border-radius: 12px; /* تقليل الزوايا */
+            background-color: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+        }
+        .timer {
+            font-size: 24px;
+            color: #ffcc00;
+            margin: 10px 0;
+        }
+        .game-area {
+            width: 90%;
+            height: 60vh;
+            position: relative;
+            border: 2px solid #ffcc00;
+            overflow: hidden;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .collectible {
+            width: 50px;
+            height: 50px;
+            background-image: url('https://i.suar.me/2Gzzw/l');
+            background-size: cover;
+            position: absolute;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .collectible:hover {
+            transform: scale(1.1);
+            animation: bounce 0.3s;
+        }
+        .button {
+            background-color: #ffcc00;
+            color: #000;
             padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: background-color 0.3s;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+            font-size: 20px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
-        .back-button:hover {
-            background-color: #0077b3;
+        .button:hover {
+            background-color: #ffbb00;
+            transform: scale(1.05);
+        }
+        #claimButton {
+            background-color: transparent;
+            color: #ffcc00;
+            border: 2px solid #ffcc00;
+            cursor: not-allowed;
+        }
+        #claimButton.active {
+            cursor: pointer;
+            opacity: 1;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
         }
     </style>
 </head>
 <body>
-    <img src="https://i.suar.me/N2p44/l" alt="App Logo" class="logo">
-    <div class="container">
-        <i class="icon fas fa-gamepad"></i>
-        <h1>Games Coming Soon!</h1>
-        <p>Stay tuned for exciting games launching soon.</p>
-        <a href="https://adscoiins.github.io/Home1/" class="back-button"><i class="fas fa-arrow-left"></i> Back to Home</a>
+
+    <img src="https://i.suar.me/2Gzzw/l" alt="Logo" class="logo">
+    <div class="timer" id="timerDisplay">Time: 30</div>
+    
+    <div class="points-container">
+        <div class="points" id="roundPointsDisplay">Round ADScoins: 0</div>
+        <div class="points" id="totalPointsDisplay">Total ADScoins: 0</div>
     </div>
+    
+    <div class="game-area" id="gameArea"></div>
+    <button class="button" id="startButton">Start Game</button>
+    <button class="button" id="claimButton" disabled>Claim</button>
+    <button class="button" id="homeButton">Back to Home</button>
+
+    <script>
+        const timerDisplay = document.getElementById('timerDisplay');
+        const roundPointsDisplay = document.getElementById('roundPointsDisplay');
+        const totalPointsDisplay = document.getElementById('totalPointsDisplay');
+        const gameArea = document.getElementById('gameArea');
+        const startButton = document.getElementById('startButton');
+        const claimButton = document.getElementById('claimButton');
+        const homeButton = document.getElementById('homeButton');
+        let roundPoints = 0;
+        let totalPoints = 0;
+        let gameActive = false;
+        let currentRound = 0;
+        const totalRounds = 3;
+        let timer;
+
+        startButton.addEventListener('click', startGame);
+        claimButton.addEventListener('click', claimPoints);
+        homeButton.addEventListener('click', goToHome);
+
+        function startGame() {
+            if (currentRound < totalRounds) {
+                roundPoints = 0;
+                roundPointsDisplay.textContent = "Round ADScoins: " + roundPoints;
+                totalPointsDisplay.textContent = "Total ADScoins: " + totalPoints;
+                gameActive = true;
+                gameArea.innerHTML = '';
+                timerDisplay.textContent = "Time: 30";
+                spawnCollectibles();
+                timer = setInterval(updateTimer, 1000);
+                setTimeout(endRound, 30000);
+                setInterval(spawnCollectibles, 2000);
+                startButton.style.display = "none";
+                claimButton.disabled = true;
+                claimButton.classList.remove('active');
+            } else {
+                goToHome();
+            }
+        }
+
+        function updateTimer() {
+            let timeLeft = parseInt(timerDisplay.textContent.split(": ")[1]) - 1;
+            timerDisplay.textContent = "Time: " + timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+            }
+        }
+
+        function endRound() {
+            gameActive = false;
+            clearInterval(timer);
+            currentRound++;
+            totalPoints += roundPoints;
+            totalPointsDisplay.textContent = "Total ADScoins: " + totalPoints;
+            if (currentRound < totalRounds) {
+                startButton.style.display = "block";
+            } else {
+                claimButton.disabled = false;
+                claimButton.classList.add('active');
+            }
+        }
+
+        function spawnCollectibles() {
+            if (!gameActive) return;
+
+            for (let i = 0; i < 3; i++) {
+                const collectible = document.createElement('div');
+                collectible.classList.add('collectible');
+                collectible.style.top = Math.random() * (gameArea.clientHeight - 50) + 'px';
+                collectible.style.left = Math.random() * (gameArea.clientWidth - 50) + 'px';
+
+                collectible.addEventListener('click', collectPoint);
+
+                gameArea.appendChild(collectible);
+                setTimeout(() => {
+                    if (collectible.parentElement) {
+                        collectible.remove();
+                    }
+                }, 5000);
+            }
+        }
+
+        function collectPoint(event) {
+            roundPoints += 10; 
+            roundPointsDisplay.textContent = "Round ADScoins: " + roundPoints;
+            event.target.remove(); 
+        }
+
+        function claimPoints() {
+            goToHome(); 
+        }
+
+        function goToHome() {
+            window.location.href = "https://adscoiins.github.io/Home1/?points=" + totalPoints; 
+        }
+    </script>
+
 </body>
 </html>
